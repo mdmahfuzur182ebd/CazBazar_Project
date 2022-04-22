@@ -1,0 +1,251 @@
+<!-- <?php
+include('includes/config.php');
+session_start();
+
+
+$id = $_GET['id'];
+$sql = "SELECT * FROM bea_donor WHERE donor_id='$id'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_array($result);
+
+
+
+
+
+if (isset($_POST["submit"])) {
+
+    //getting the data
+    $beblood_group = mysqli_real_escape_string($conn, $_POST["bloodgroup"]);
+    $beDonor_Name = mysqli_real_escape_string($conn, $_POST["donorName"]);
+    $beemail = mysqli_real_escape_string($conn, $_POST["donor_email"]);
+    $beDistrict = mysqli_real_escape_string($conn, $_POST["district"]);
+    $beArea = mysqli_real_escape_string($conn, $_POST["area"]);
+    $beLast_Donation_Date = mysqli_real_escape_string($conn, $_POST["lastdonationDate"]);
+    $becontact_no = mysqli_real_escape_string($conn, $_POST["contact_number"]);
+    $begender = mysqli_real_escape_string($conn, $_POST["gender"]);
+
+    $sql2= "UPDATE bea_donor SET  bloodgroup='$beblood_group', donorName = '$beDonor_Name', donor_email = ' $beemail ',district='$beDistrict', area= ' $beArea', lastdonationDate = '$beLast_Donation_Date', contact_number = '$becontact_no', gender = ' $begender' WHERE donor_id ='$id' ";
+
+    if($result2 = mysqli_query($conn, $sql2)){
+        echo "Data Update SUCCESSFULLY";
+        header('Location:updatDelect.php');
+    }else{
+        echo"Sorry! data not Updated";
+    }
+ }
+
+?> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>CarBazar</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html">CarBazar</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Admin</a></li>
+
+                    <form action="logout.php" method="post">
+                        <li><button class="dropdown-item" name="logout_btn" href="#!">Logout</button></li>
+                    </form>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+
+
+
+
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <<div class="sb-sidenav-menu-heading">Admin!!
+                    </div>
+
+                    <a class="nav-link" href="index.php">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Dashboard
+                    </a>
+                    <a class="nav-link" href="ViewDonorHistory.php">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        View Total Post  History
+                    </a>
+
+                    <a class="nav-link" href="bloodrequest.php">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                         Post Requests
+                    </a>
+
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                         Car Collection Details
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                 Car Details
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="AddBlood.php">Add Blood</a>
+                                    <a class="nav-link" href="updatDelect.php">Edit and remove Blood</a>
+                                </nav>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+        </div>
+        <div class="sb-sidenav-footer">
+            <div class="small">Logged in:</div>
+             CarBzar Admin
+        </div>
+        </nav>
+    </div>
+
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4"> Update Vechile Post</h1>
+                <ol class="breadcrumb mb-4" style="border-bottom: 2px solid rgb(10, 204, 107);">
+                    <li class="breadcrumb-item active"></li>
+                </ol>
+
+                <!-- form section -->
+
+                <div class="container" style="padding: 60px 0;">
+                    <div class="row">
+                        <div class=" card col-md-6 offset-md-3">
+                            <div class="panel panel-default" style="padding: 20px;">
+
+                                <form action="" method="post" class="form-group form-container">
+
+                                    <div class="form-group mb-3">
+                                        <label for="name">Blood Group :</label>
+                                        <select class="form-control demo-default" id="blood_group" name="bloodgroup">
+                                            <option value="">Select Blood Group</option>
+                                            <option value="A+" <?php if ($row['bloodgroup'] == "A+") {
+                                                                    echo "selected";
+                                                                } ?>>A+</option>
+                                            <option value="A-" <?php if ($row['bloodgroup'] == "A-") {
+                                                                    echo "selected";
+                                                                } ?>>A-</option>
+                                            <option value="B+" <?php if ($row['bloodgroup'] == "B+") {
+                                                                    echo "selected";
+                                                                } ?>>B+</option>
+                                            <option value="B-" <?php if ($row['bloodgroup'] == "B-") {
+                                                                    echo "selected";
+                                                                } ?>>B-</option>
+                                            <option value="O+" <?php if ($row['bloodgroup'] == "O+") {
+                                                                    echo "selected";
+                                                                } ?>>O+</option>
+                                            <option value="O-" <?php if ($row['bloodgroup'] == "O-") {
+                                                                    echo "selected";
+                                                                } ?>>O-</option>
+                                            <option value="AB+" <?php if ($row['bloodgroup'] == "AB+") {
+                                                                    echo "selected";
+                                                                } ?>>AB+</option>
+                                            <option value="AB-" <?php if ($row['bloodgroup'] == "AB-") {
+                                                                    echo "selected";
+                                                                } ?>>AB-</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1" class="form-label">Donor Name :</label>
+                                        <input type="text" class="form-control" placeholder="Full Name" id="" name="donorName" value="<?php echo $row["donorName"]; ?>">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInput" class="form-label">Email :</label>
+                                        <input type="email" class="form-control" placeholder="Email" id="" name="donor_email" value="<?php echo $row["donor_email"]; ?>">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInput" class="form-label">District :</label>
+                                        <input type="text" class="form-control" placeholder="District" id="" name="district" value="<?php echo $row["district"]; ?>">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInput" class="form-label">Area * :</label>
+                                        <input type="text" class="form-control" placeholder="Area" id="" name="area" value="<?php echo $row["area"]; ?>">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Last Donation Date(Optional) :</label>
+                                        <input type="date" class="form-control" id="" name="lastdonationDate" value="<?php echo $row["lastdonationDate"]; ?>">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Contact Number * :</label>
+                                        <input type="text" placeholder="Contact Number" name="contact_number" value="<?php echo $row["contact_number"]; ?>" class="form-control" required pattern="^\d{11}$" title="11 numeric characters only" maxlength="11">
+                                    </div <div class="mb-3">
+                                    <label for="gender">Gender :</label>
+                                    <select name="gender" id="gender" class="form-control" value="">
+                                        <option value="">Select Gender</option>
+                                        <option value="Male" <?php if ($row['gender'] == "Male") {
+                                                                    echo "selected";
+                                                                } ?>>
+                                            Male</option>
+                                        <option value="Fe-male" <?php if ($row['gender'] == "Fe-male") {
+                                                                    echo "selected";
+                                                                } ?>>Fe-male</option>
+                                    </select>
+                            </div>
+                            <div class="form-group form">
+                                <button class="btn  btn-danger center-aligned" style="margin-bottom:5px;" type="submit" name="submit">Update </button>
+                            </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Bd Blood Sourch</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="js/datatables-simple-demo.js"></script>
+</body>
+
+</html>
